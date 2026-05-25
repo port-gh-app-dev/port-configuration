@@ -1,0 +1,25 @@
+{
+  "identifier": "wizControl",
+  "description": "This blueprint represents a wiz source rule",
+  "title": "Wiz Control",
+  "icon": "Wiz",
+  "schema": {
+    "properties": {
+      "controlDescription": {
+        "type": "string",
+        "title": "Control Description",
+        "description": "the control description"
+      },
+      "resolutionRecommendation": {
+        "type": "string",
+        "title": "Control Recommendation",
+        "description": "the control recommendation on resolving issues"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

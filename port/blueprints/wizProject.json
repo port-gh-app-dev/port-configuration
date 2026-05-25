@@ -1,0 +1,38 @@
+{
+  "identifier": "wizProject",
+  "description": "This blueprint represents a wiz project",
+  "title": "Wiz Project",
+  "icon": "Wiz",
+  "schema": {
+    "properties": {
+      "archived": {
+        "type": "boolean",
+        "title": "Archived?",
+        "description": "Is the project archived?"
+      },
+      "businessUnit": {
+        "type": "string",
+        "title": "Business Unit",
+        "description": "the business unit of the project"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "the project description"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "issues": {
+      "title": "Issues",
+      "description": "The issues affecting this project",
+      "target": "wizIssue",
+      "required": false,
+      "many": true
+    }
+  }
+}
