@@ -1,0 +1,65 @@
+{
+  "identifier": "pagerdutyOncall",
+  "description": "This blueprint represents a PagerDuty oncall schedule in our software catalog",
+  "title": "PagerDuty Oncall Schedule",
+  "icon": "pagerduty",
+  "ownership": {
+    "type": "Inherited",
+    "path": "port_user"
+  },
+  "schema": {
+    "properties": {
+      "url": {
+        "icon": "DefaultProperty",
+        "title": "Oncall Schedule URL",
+        "type": "string",
+        "format": "url"
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "user": {
+      "title": "User",
+      "path": "port_user.$identifier"
+    }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "port_user": {
+      "title": "Port User",
+      "target": "_user",
+      "required": false,
+      "many": false
+    },
+    "pagerdutySchedule": {
+      "title": "PagerDuty Schedule",
+      "target": "pagerdutySchedule",
+      "required": false,
+      "many": true
+    },
+    "pagerdutyEscalationPolicy": {
+      "title": "Escalation Policy",
+      "target": "pagerdutyEscalationPolicy",
+      "required": false,
+      "many": false
+    },
+    "pagerduty_user": {
+      "title": "Pagerduty User",
+      "target": "pagerdutyUser",
+      "required": false,
+      "many": false
+    }
+  }
+}

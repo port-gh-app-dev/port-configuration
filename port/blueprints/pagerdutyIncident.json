@@ -1,0 +1,365 @@
+{
+  "identifier": "pagerdutyIncident",
+  "description": "This blueprint represents a PagerDuty incident in our software catalog",
+  "title": "PagerDuty Incident",
+  "icon": "pagerduty",
+  "ownership": {
+    "type": "Inherited",
+    "path": "service"
+  },
+  "schema": {
+    "properties": {
+      "status": {
+        "icon": "DefaultProperty",
+        "title": "Incident Status",
+        "type": "string",
+        "enum": [
+          "triggered",
+          "annotated",
+          "acknowledged",
+          "reassigned",
+          "escalated",
+          "reopened",
+          "resolved",
+          "escalated to human",
+          "investigating",
+          "mitigating",
+          "closed"
+        ],
+        "enumColors": {
+          "triggered": "red",
+          "annotated": "blue",
+          "acknowledged": "yellow",
+          "reassigned": "blue",
+          "escalated": "yellow",
+          "reopened": "red",
+          "resolved": "green",
+          "escalated to human": "bronze"
+        }
+      },
+      "url": {
+        "type": "string",
+        "format": "url",
+        "title": "Incident URL"
+      },
+      "urgency": {
+        "icon": "DefaultProperty",
+        "title": "Incident Urgency",
+        "type": "string",
+        "enum": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "enumColors": {
+          "high": "red",
+          "low": "green",
+          "medium": "yellow"
+        }
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "assignees": {
+        "title": "Assignees",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
+      },
+      "escalation_policy": {
+        "type": "string",
+        "title": "Escalation Policy"
+      },
+      "created_at": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updated_at": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "resolvedAt": {
+        "title": "Incident Resolution Time",
+        "type": "string",
+        "format": "date-time",
+        "description": "The timestamp when the incident was resolved"
+      },
+      "recoveryTime": {
+        "title": "Time to Recovery",
+        "type": "number",
+        "description": "The time (in minutes) between the incident being triggered and resolved"
+      },
+      "triggered_by": {
+        "type": "string",
+        "title": "Triggered By"
+      },
+      "source": {
+        "title": "Source",
+        "description": "Indicates whether this is real PagerDuty data or demo data",
+        "type": "string"
+      },
+      "ai_status": {
+        "title": "AI Status",
+        "description": "Current AI agent handling status",
+        "type": "string"
+      },
+      "ai_update": {
+        "type": "string",
+        "title": "AI Update",
+        "format": "markdown"
+      },
+      "slack_channel": {
+        "type": "string",
+        "title": "Slack Channel",
+        "description": "The ID of the slack channel",
+        "icon": "Slack"
+      },
+      "zoom_meeting_link": {
+        "type": "string",
+        "title": "Zoom Meeting Link",
+        "description": "The zoom meeting link",
+        "icon": "Team",
+        "format": "url"
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "Critical",
+          "High",
+          "Medium",
+          "Low"
+        ],
+        "enumColors": {
+          "Critical": "red",
+          "High": "red",
+          "Medium": "yellow",
+          "Low": "lime"
+        }
+      },
+      "jira_tracking_ticket": {
+        "type": "string",
+        "title": "Jira Tracking Ticket",
+        "icon": "Jira",
+        "format": "url"
+      },
+      "impacted_customer_count": {
+        "title": "Impacted Customer Count",
+        "type": "number"
+      },
+      "estimated_revenue_impact": {
+        "title": "Estimated Revenue Impact ($)",
+        "type": "number"
+      },
+      "alerted_at": {
+        "title": "Alerted At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "triaged_at": {
+        "title": "Triaged At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "investigation_started_at": {
+        "title": "Investigation Started At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "remediation_started_at": {
+        "title": "Remediation Started At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "resolved_at": {
+        "title": "Resolved At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "postmortem_completed_at": {
+        "title": "Postmortem Completed At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "mttr_minutes": {
+        "title": "MTTR (minutes)",
+        "type": "number"
+      },
+      "ai_suggested_severity": {
+        "title": "AI Suggested Severity",
+        "type": "string",
+        "enum": [
+          "sev1",
+          "sev2",
+          "sev3",
+          "sev4"
+        ]
+      },
+      "ai_suggested_root_cause": {
+        "title": "AI Suggested Root Cause",
+        "type": "string",
+        "format": "markdown"
+      },
+      "ai_remediation_plan": {
+        "title": "AI Remediation Plan",
+        "type": "string",
+        "format": "markdown"
+      },
+      "runbook_url": {
+        "title": "Runbook URL",
+        "type": "string",
+        "format": "url"
+      },
+      "war_room_url": {
+        "title": "War Room URL",
+        "type": "string",
+        "format": "url"
+      },
+      "postmortem_content": {
+        "title": "Postmortem Content",
+        "type": "string",
+        "format": "markdown"
+      },
+      "ai_suggested_postmortem": {
+        "title": "AI Suggested Postmortem",
+        "type": "string",
+        "format": "markdown"
+      },
+      "ai_suggested_owner": {
+        "title": "AI Suggested Owner",
+        "type": "string",
+        "format": "user"
+      },
+      "ai_suggested_response_team": {
+        "title": "AI Suggested Response Team",
+        "type": "string",
+        "format": "team"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "original_alert_name": {
+      "title": "Original alert",
+      "path": "original_alert.$title"
+    },
+    "original_alert_link": {
+      "title": "Original Alert Link",
+      "path": "original_alert.link"
+    },
+    "assignee": {
+      "title": "Assignee",
+      "path": "incident_port_assignee.$identifier"
+    },
+    "pr_title": {
+      "title": "Related PR Title",
+      "path": "related_pr.$title"
+    },
+    "pr_status": {
+      "title": "Related PR Status",
+      "path": "related_pr.status"
+    },
+    "service_tier": {
+      "title": "Service Tier",
+      "path": "service.tier"
+    },
+    "slack_channel_service": {
+      "title": "Service Slack Channel",
+      "path": "pagerdutyService.slack_channel"
+    },
+    "readme": {
+      "title": "Readme",
+      "path": "repository.readme"
+    },
+    "repository_last_push": {
+      "title": "Repository Last Push",
+      "path": "repository.last_push"
+    },
+    "repository_last_contributor": {
+      "title": "Repository Last Contributor",
+      "path": "repository.last_contributor"
+    },
+    "repository_vulnerabilities": {
+      "title": "Repository Vulnerabilities",
+      "path": "repository.vulnerabilities_critical"
+    }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": {
+      "title": "Repository",
+      "target": "githubRepository",
+      "required": false,
+      "many": false
+    },
+    "running_service": {
+      "title": "Running Service",
+      "target": "running_service",
+      "required": false,
+      "many": false
+    },
+    "related_service": {
+      "title": "related service",
+      "target": "githubRepo",
+      "required": false,
+      "many": false
+    },
+    "pagerdutyService": {
+      "title": "PagerDuty Service",
+      "target": "pagerdutyService",
+      "required": false,
+      "many": false
+    },
+    "original_alert": {
+      "title": "Original alert",
+      "target": "newRelicAlert",
+      "required": false,
+      "many": false
+    },
+    "incident_port_assignee": {
+      "title": "Incident Assignee",
+      "target": "_user",
+      "required": false,
+      "many": true
+    },
+    "incident_pagerduty_assignee": {
+      "title": "Incident Pagerduty Assignee",
+      "target": "pagerdutyUser",
+      "required": false,
+      "many": true
+    },
+    "related_pr": {
+      "title": "Related PR",
+      "description": "Pull request that fixed this incident",
+      "target": "githubPullRequest",
+      "required": false,
+      "many": false
+    },
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  },
+  "scorecards": [
+    {
+      "identifier": "incident_ai_access",
+      "levels": [
+        "Autonomous",
+        "Supervised",
+        "Human Required"
+      ]
+    }
+  ]
+}

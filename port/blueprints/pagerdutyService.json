@@ -1,0 +1,91 @@
+{
+  "identifier": "pagerdutyService",
+  "description": "This blueprint represents a PagerDuty service in our software catalog",
+  "title": "PagerDuty Service",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": [
+          "active",
+          "warning",
+          "critical",
+          "maintenance",
+          "disabled"
+        ],
+        "enumColors": {
+          "active": "green",
+          "warning": "yellow",
+          "critical": "red",
+          "maintenance": "lightGray",
+          "disabled": "darkGray"
+        }
+      },
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "oncall": {
+        "title": "On Call",
+        "type": "string",
+        "format": "user"
+      },
+      "secondaryOncall": {
+        "title": "Secondary On Call",
+        "type": "string",
+        "format": "user"
+      },
+      "escalationLevels": {
+        "title": "Escalation Levels",
+        "type": "number"
+      },
+      "meanSecondsToResolve": {
+        "title": "Mean Seconds to Resolve",
+        "type": "number"
+      },
+      "meanSecondsToFirstAck": {
+        "title": "Mean Seconds to Acknowledge",
+        "type": "number"
+      },
+      "meanSecondsToEngage": {
+        "title": "Mean Seconds to Engage",
+        "type": "number"
+      },
+      "slack_channel": {
+        "icon": "Slack",
+        "type": "string",
+        "title": "Slack Channel"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {
+    "total_open_incident": {
+      "title": "Number of Open Incidents",
+      "icon": "pagerduty",
+      "type": "number",
+      "description": "Total open incidents for a service",
+      "target": "pagerdutyIncident",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "!=",
+            "value": "resolved"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    }
+  },
+  "relations": {}
+}
