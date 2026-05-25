@@ -1,0 +1,21 @@
+{
+  "identifier": "wizServiceTicket",
+  "description": "This blueprint represents a wiz service ticket",
+  "title": "Wiz Service Ticket",
+  "icon": "Wiz",
+  "schema": {
+    "properties": {
+      "url": {
+        "type": "string",
+        "title": "Ticket URL",
+        "format": "url",
+        "description": "the service ticket URL"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
