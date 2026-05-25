@@ -1,2 +1,2 @@
-# perf-test-repo-1a749683
-Test repository 18 for performance testing. UID: 1a749683
+# port-configuration
+Repository for storing configurations such as blueprints/actions and scorecards from Port
