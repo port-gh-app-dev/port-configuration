@@ -1,0 +1,14 @@
+{
+  "identifier": "pagerdutySchedule",
+  "description": "This blueprint represents a PagerDuty schedule in our software catalog",
+  "title": "PagerDuty Schedule",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {},
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
