@@ -1,0 +1,46 @@
+{
+  "identifier": "incident",
+  "title": "Incident",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "severity": { "title": "Severity", "type": "string", "enum": ["sev1", "sev2", "sev3", "sev4"] },
+      "status": { "title": "Status", "type": "string", "enum": ["active", "investigating", "mitigating", "resolved", "closed"] },
+      "description": { "title": "Description", "type": "string", "format": "markdown" },
+      "alert_source": { "type": "string", "enum": ["pagerduty", "datadog", "prometheus", "manual", "sentry", "dynatrace"], "title": "Alert Source" },
+      "business_impact": { "title": "Business Impact", "type": "string", "format": "markdown" },
+      "impacted_customer_count": { "title": "Impacted Customer Count", "type": "number" },
+      "estimated_revenue_impact": { "title": "Estimated Revenue Impact ($)", "type": "number" },
+      "alerted_at": { "title": "Alerted At", "type": "string", "format": "date-time" },
+      "resolved_at": { "title": "Resolved At", "type": "string", "format": "date-time" },
+      "mttr_minutes": { "title": "MTTR (minutes)", "type": "number" },
+      "ai_suggested_severity": { "title": "AI Suggested Severity", "type": "string" },
+      "ai_suggested_root_cause": { "title": "AI Suggested Root Cause", "type": "string", "format": "markdown" },
+      "ai_remediation_plan": { "title": "AI Remediation Plan", "type": "string", "format": "markdown" },
+      "internal_comms_message": { "title": "Internal Comms Message", "type": "string", "format": "markdown" },
+      "status_page_message": { "title": "Status Page Message", "type": "string", "format": "markdown" },
+      "runbook_url": { "title": "Runbook URL", "type": "string", "format": "url" },
+      "war_room_url": { "title": "War Room URL", "type": "string", "format": "url" },
+      "postmortem_content": { "title": "Postmortem Content", "type": "string", "format": "markdown" },
+      "ai_suggested_postmortem": { "title": "AI Suggested Postmortem", "type": "string", "format": "markdown" },
+      "ai_suggested_owner": { "title": "AI Suggested Owner", "type": "string", "format": "user" },
+      "ai_suggested_response_team": { "title": "AI Suggested Response Team", "type": "string", "format": "team" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "service_tier": { "title": "Service Tier", "path": "primary_service.tier" },
+    "pr_status": { "title": "PR Status", "path": "remediation_pr.status" },
+    "pr_link": { "title": "PR Link", "path": "remediation_pr.link" }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "primary_service": { "target": "service", "required": false, "many": false },
+    "remediation_pr": { "target": "githubPullRequest", "required": false, "many": false },
+    "response_team": { "target": "_team", "required": false, "many": false },
+    "affected_services": { "target": "service", "required": false, "many": true },
+    "related_incidents": { "target": "incident", "required": false, "many": true },
+    "owner": { "target": "_user", "required": false, "many": false }
+  }
+}

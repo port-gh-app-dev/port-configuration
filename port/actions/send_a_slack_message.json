@@ -1,0 +1,36 @@
+{
+  "identifier": "send_a_slack_message",
+  "title": "Send Slack Message",
+  "icon": "Slack",
+  "description": "Sends a notification message to a Slack channel",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "channel": { "title": "Channel ID", "type": "string" },
+        "message": { "title": "Message", "type": "string" }
+      },
+      "required": ["channel", "message"],
+      "order": ["channel", "message"]
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://slack.com/api/chat.postMessage",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}",
+      "Content-Type": "application/json",
+      "Authorization": "Bearer {{ .secrets.SLACK_BOT_TOKEN }}"
+    },
+    "body": {
+      "channel": "{{ .inputs.channel }}",
+      "text": "{{ .inputs.message }}"
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}

@@ -1,0 +1,24 @@
+{
+  "identifier": "_user",
+  "title": "User",
+  "icon": "User",
+  "description": "This blueprint is synced with active or invited Port users",
+  "ownership": { "type": "Direct", "title": "Teams" },
+  "schema": {
+    "properties": {
+      "port_type": { "title": "Port Type", "type": "string", "default": "Standard", "enum": ["Standard", "Service Account"] },
+      "port_role": { "title": "Port Role", "type": "string", "default": "Member", "enum": ["Admin", "Moderator", "Member"] },
+      "moderated_blueprints": { "type": "array", "title": "Moderated Blueprints", "items": { "type": "string", "format": "blueprints" } },
+      "status": { "type": "string", "title": "Status", "enum": ["Invited", "Active", "Disabled", "Staged"] }
+    },
+    "required": ["port_role", "status", "port_type"]
+  },
+  "mirrorProperties": {
+    "git_hub_username": { "title": "GitHub username", "path": "git_hub_user.$identifier" }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "git_hub_user": { "title": "GitHub User", "target": "githubUser", "required": false, "many": false }
+  }
+}

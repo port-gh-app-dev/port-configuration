@@ -1,0 +1,26 @@
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Microservice",
+  "ownership": { "type": "Direct" },
+  "schema": {
+    "properties": {
+      "last_commit_date": { "title": "Last Commit Date", "type": "string", "format": "date-time" },
+      "tier": { "title": "Tier", "type": "number" },
+      "criticality": { "title": "Criticality", "type": "string" },
+      "slack_channel": { "type": "string", "title": "Slack Channel" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "repo_id": { "title": "Repo ID", "path": "repository.$identifier" }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "consumed_by": { "title": "Consumed By", "target": "service", "required": false, "many": true },
+    "last_committer": { "title": "Last Committer", "target": "_user", "required": false, "many": false },
+    "depends_on": { "title": "Depends On", "target": "service", "required": false, "many": true },
+    "repository": { "title": "Repository", "target": "githubRepository", "required": false, "many": false }
+  }
+}

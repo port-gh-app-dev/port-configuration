@@ -1,0 +1,45 @@
+{
+  "identifier": "jiraIssue",
+  "title": "Jira Issue",
+  "icon": "Jira",
+  "ownership": { "type": "Inherited", "path": "assignee" },
+  "schema": {
+    "properties": {
+      "url": { "title": "Issue URL", "type": "string", "format": "url" },
+      "status": { "title": "Status", "type": "string" },
+      "issueType": { "title": "Type", "type": "string" },
+      "components": { "title": "Components", "type": "array" },
+      "creator": { "title": "Creator", "type": "string", "format": "user" },
+      "priority": { "title": "Priority", "type": "string" },
+      "labels": { "title": "Labels", "type": "array" },
+      "created": { "title": "Created At", "type": "string", "format": "date-time" },
+      "updated": { "title": "Updated At", "type": "string", "format": "date-time" },
+      "resolutionDate": { "title": "Resolved At", "type": "string", "format": "date-time" },
+      "description": { "title": "Description", "type": "string", "format": "markdown" },
+      "confidence_score": { "title": "AI Confidence Score", "type": "number" },
+      "triage_status": { "title": "AI Triage Status", "type": "string", "enum": ["Awaiting approval", "Not started", "Draft", "Approved"] },
+      "ai_assignment_reasoning": { "title": "AI Assignment Reasoning", "type": "string" },
+      "assignment_source": { "title": "Ownership Assignment Source", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "pull_request_link": { "title": "Pull Request Link", "path": "pull_request.link" }
+  },
+  "calculationProperties": {
+    "handlingDuration": { "title": "Handling Duration (Days)", "calculation": "if (.properties.resolutionDate != null and .properties.created != null) then ((.properties.resolutionDate[0:19] + \"Z\" | fromdateiso8601) - (.properties.created[0:19] + \"Z\" | fromdateiso8601)) / 86400 else null end", "type": "number" }
+  },
+  "aggregationProperties": {},
+  "relations": {
+    "jira_user_reporter": { "title": "Reporter (Jira User)", "target": "jiraUser", "required": false, "many": false },
+    "pull_request": { "title": "Pull Request", "target": "githubPullRequest", "required": false, "many": false },
+    "assignee": { "title": "Assignee", "target": "_user", "required": false, "many": false },
+    "jira_user_assignee": { "title": "Assignee (Jira User)", "target": "jiraUser", "required": false, "many": false },
+    "subtasks": { "title": "Subtasks", "target": "jiraIssue", "required": false, "many": true },
+    "parentIssue": { "title": "Parent Issue", "target": "jiraIssue", "required": false, "many": false },
+    "repository": { "title": "Repository", "target": "githubRepository", "required": false, "many": false },
+    "ai_discovered_team": { "title": "AI Discovered Team", "target": "_team", "required": false, "many": false },
+    "reporter": { "title": "Reporter", "target": "_user", "required": false, "many": false },
+    "project": { "title": "Project", "target": "jiraProject", "required": false, "many": false }
+  }
+}

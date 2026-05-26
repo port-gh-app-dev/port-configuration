@@ -1,0 +1,39 @@
+{
+  "identifier": "githubPullRequest",
+  "title": "GitHub Pull Request",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "status": { "title": "Status", "type": "string", "enum": ["open", "closed", "merged"], "enumColors": { "closed": "red", "merged": "green", "open": "blue" } },
+      "closedAt": { "title": "Closed At", "type": "string", "format": "date-time" },
+      "mergedAt": { "title": "Merged At", "type": "string", "format": "date-time" },
+      "createdAt": { "title": "Created At", "type": "string", "format": "date-time" },
+      "link": { "format": "url", "type": "string", "title": "Link" },
+      "prNumber": { "type": "number", "title": "PR Number" },
+      "branch": { "type": "string", "title": "Branch" },
+      "cycle_time_hours": { "title": "PR Cycle Time (Hours)", "type": "number" },
+      "has_assignees": { "title": "Has assignees", "type": "boolean" },
+      "has_reviewers": { "title": "Has reviewers", "type": "boolean" },
+      "lead_time_hours": { "title": "Lead Time for Changes (Hours)", "type": "number" },
+      "reviewDecision": { "enum": ["APPROVED", "CHANGES_REQUESTED", "REVIEW_REQUIRED"], "title": "Review Decision", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "reviewer_teams": { "title": "Reviewer Teams", "path": "reviewers.$team" }
+  },
+  "calculationProperties": {
+    "days_old": { "title": "Days Old", "calculation": "(now / 86400) - (.properties.createdAt | capture(\"(?<date>\\\\d{4}-\\\\d{2}-\\\\d{2})\") | .date | strptime(\"%Y-%m-%d\") | mktime / 86400) | floor", "type": "number" },
+    "is_stale": { "title": "Is Stale (7d+)", "calculation": "if (.properties.status == \"open\" and (((now / 86400) - (.properties.createdAt | capture(\"(?<date>\\\\d{4}-\\\\d{2}-\\\\d{2})\") | .date | strptime(\"%Y-%m-%d\") | mktime / 86400) | floor) > 7)) then true else false end", "type": "boolean" }
+  },
+  "aggregationProperties": {},
+  "relations": {
+    "git_hub_creator": { "title": "Creator", "target": "githubUser", "required": false, "many": false },
+    "git_hub_reviewers": { "title": "Reviewers", "target": "githubUser", "required": false, "many": true },
+    "repository": { "title": "Repository", "target": "githubRepository", "required": false, "many": false },
+    "reviewers": { "title": "Reviewers", "target": "_user", "required": false, "many": true },
+    "creator": { "title": "Creator", "target": "_user", "required": false, "many": false },
+    "assignees": { "title": "Assignees", "target": "_user", "required": false, "many": true },
+    "git_hub_assignees": { "title": "Assignees", "target": "githubUser", "required": false, "many": true }
+  }
+}

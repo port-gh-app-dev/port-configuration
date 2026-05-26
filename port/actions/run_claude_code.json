@@ -1,0 +1,32 @@
+{
+  "identifier": "run_claude_code",
+  "title": "Run Claude Code",
+  "icon": "Claude",
+  "description": "Open a Claude Code PR on any given repository",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "prompt": { "type": "string", "title": "Prompt", "format": "multi-line" },
+        "service": { "type": "string", "blueprint": "service", "title": "Service", "format": "entity" }
+      },
+      "required": ["prompt", "service"],
+      "order": ["prompt", "service"]
+    }
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
+    "workflow": "claude-backend.yaml",
+    "workflowInputs": {
+      "command": "{{ .inputs.prompt }}",
+      "repo_name": "{{ .inputs.service.identifier }}",
+      "run_id": "{{ .run.id }}"
+    },
+    "reportWorkflowStatus": false
+  },
+  "requiredApproval": false,
+  "publish": true
+}

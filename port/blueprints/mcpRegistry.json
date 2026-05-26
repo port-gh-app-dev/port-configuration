@@ -1,0 +1,27 @@
+{
+  "identifier": "mcpRegistry",
+  "title": "MCP Registry",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "type": { "title": "Server Type", "type": "string", "enum": ["internal", "external"] },
+      "status": { "title": "Approval Status", "type": "string", "enum": ["approved", "pending", "rejected"] },
+      "description": { "title": "Description", "type": "string", "format": "markdown" },
+      "labels": { "title": "Labels", "type": "array", "items": { "type": "string" } },
+      "installation_instructions": { "title": "Installation Instructions", "type": "string", "format": "markdown" },
+      "repository_url": { "title": "Repository URL", "type": "string", "format": "url" },
+      "endpoint": { "title": "Endpoint", "type": "string" },
+      "command": { "title": "Command", "type": "string" },
+      "tools": { "title": "Available Tools", "type": "array", "items": { "type": "string" } },
+      "prompts": { "title": "Available Prompts", "type": "array", "items": { "type": "string" } }
+    },
+    "required": ["type", "status", "description"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "owningTeam": { "title": "Owning Team", "target": "_team", "required": false, "many": false },
+    "requestedBy": { "title": "Requested By", "target": "_user", "required": false, "many": false }
+  }
+}

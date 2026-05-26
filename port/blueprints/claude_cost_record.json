@@ -1,0 +1,18 @@
+{
+  "identifier": "claude_cost_record",
+  "title": "Claude AI Cost Record",
+  "icon": "Claude",
+  "description": "Daily cost tracking for Claude API usage",
+  "schema": {
+    "properties": {
+      "record_date": { "type": "string", "format": "date-time", "title": "Record Date (UTC)" },
+      "amount": { "type": "number", "title": "Cost Amount" },
+      "currency": { "type": "string", "title": "Currency" }
+    },
+    "required": ["record_date"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

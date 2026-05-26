@@ -1,0 +1,26 @@
+{
+  "identifier": "incident_triage_automation",
+  "title": "Auto-Triage New Incidents",
+  "trigger": {
+    "type": "automation",
+    "event": { "type": "ENTITY_UPDATED", "blueprintIdentifier": "incident" },
+    "condition": { "type": "JQ", "expressions": [], "combinator": "and" }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.port.io/v1/ai/invoke",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": { "Content-Type": "application/json" },
+    "body": {
+      "userPrompt": "A new incident has been created in Port. Load the skill 'sre-incident-triage' using the load_skill MCP tool and follow its instructions exactly to triage this incident.\n\nIncident context:\n- Incident ID: {{.event.diff.after.identifier}}\n- Title: {{.event.diff.after.title}}\n- Properties: {{.event.diff.after.properties}}\n- Relations: {{.event.diff.after.relations}}",
+      "tools": ["^(list|get|search|track|load|describe)_.*", "dynatrace_.*"],
+      "mcpServers": [{ "identifier": "dynatrace" }],
+      "systemPrompt": "You are an incident triage assistant embedded in Port.",
+      "executionMode": "Automatic",
+      "labels": { "source": "automation", "entity_id": "{{ .event.diff.after.identifier }}" }
+    }
+  },
+  "publish": true
+}

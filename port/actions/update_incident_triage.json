@@ -1,0 +1,39 @@
+{
+  "identifier": "update_incident_triage",
+  "title": "Update Incident Triage",
+  "icon": "DefaultProperty",
+  "description": "Called by AI triage agent to store analysis results",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "incident_id": { "type": "string", "title": "Incident ID" },
+        "ai_suggested_severity": { "type": "string", "title": "AI Suggested Severity", "enum": ["sev1", "sev2", "sev3", "sev4"] },
+        "business_impact": { "type": "string", "title": "Business Impact", "format": "markdown" },
+        "internal_comms_message": { "type": "string", "title": "Internal Communications Message", "format": "markdown" },
+        "status_page_message": { "type": "string", "title": "Status Page Message", "format": "markdown" },
+        "ai_suggested_owner": { "type": "string", "title": "AI Suggested Owner", "format": "user" },
+        "ai_suggested_response_team": { "type": "string", "title": "AI Suggested Response Team", "format": "team" }
+      },
+      "required": ["incident_id", "ai_suggested_severity", "business_impact", "internal_comms_message"]
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "incident",
+    "mapping": {
+      "identifier": "{{ .inputs.incident_id }}",
+      "properties": {
+        "ai_suggested_severity": "{{ .inputs.ai_suggested_severity }}",
+        "business_impact": "{{ .inputs.business_impact }}",
+        "internal_comms_message": "{{ .inputs.internal_comms_message }}",
+        "status_page_message": "{{ .inputs.status_page_message }}",
+        "ai_suggested_owner": "{{ .inputs.ai_suggested_owner }}",
+        "ai_suggested_response_team": "{{ .inputs.ai_suggested_response_team }}"
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}

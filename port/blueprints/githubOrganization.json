@@ -1,0 +1,26 @@
+{
+  "identifier": "githubOrganization",
+  "title": "GitHub Organization",
+  "icon": "Github",
+  "description": "This blueprint represents a GitHub organization with engineering metrics",
+  "schema": {
+    "properties": {
+      "login": { "type": "string", "title": "Organization Login" },
+      "id": { "type": "number", "title": "Organization ID" },
+      "nodeId": { "type": "string", "title": "Node ID" },
+      "url": { "type": "string", "title": "URL" },
+      "avatarUrl": { "type": "string", "title": "Avatar URL" },
+      "description": { "type": "string", "title": "Description" },
+      "createdAt": { "format": "date-time", "title": "Created At", "type": "string" },
+      "publicRepos": { "title": "Public Repositories", "type": "number" },
+      "updatedAt": { "format": "date-time", "title": "Updated At", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "organization": { "title": "Organization", "target": "organization", "required": false, "many": false }
+  }
+}

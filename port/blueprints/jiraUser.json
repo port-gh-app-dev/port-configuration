@@ -1,0 +1,18 @@
+{
+  "identifier": "jiraUser",
+  "title": "Jira User",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "emailAddress": { "title": "Email", "type": "string", "format": "email" },
+      "displayName": { "title": "Display Name", "type": "string" },
+      "active": { "title": "Active Status", "type": "boolean" },
+      "accountType": { "title": "Account Type", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

@@ -1,0 +1,25 @@
+{
+  "identifier": "claude_usage_record",
+  "title": "Claude AI Usage Record",
+  "icon": "Claude",
+  "description": "Daily Claude AI API usage metrics",
+  "schema": {
+    "properties": {
+      "record_date": { "type": "string", "format": "date-time", "title": "Record Date (UTC)" },
+      "uncached_input_tokens": { "type": "number", "title": "Uncached Input Tokens" },
+      "output_tokens": { "type": "number", "title": "Output Tokens" },
+      "cache_read_input_tokens": { "type": "number", "title": "Cache Read Input Tokens" },
+      "cache_creation_5m_tokens": { "type": "number", "title": "Cache Creation (5min) Tokens" },
+      "cache_creation_1h_tokens": { "type": "number", "title": "Cache Creation (1hr) Tokens" },
+      "web_search_requests": { "type": "number", "title": "Web Search Requests" }
+    },
+    "required": ["record_date"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "total_input_tokens": { "title": "Total Input Tokens", "calculation": ".properties.uncached_input_tokens + .properties.cache_read_input_tokens", "type": "number" },
+    "total_tokens": { "title": "Total Tokens", "calculation": ".properties.uncached_input_tokens + .properties.cache_read_input_tokens + .properties.output_tokens", "type": "number" }
+  },
+  "aggregationProperties": {},
+  "relations": {}
+}

@@ -1,0 +1,37 @@
+{
+  "identifier": "work_item",
+  "title": "Work item",
+  "icon": "Travel",
+  "schema": {
+    "properties": {
+      "priority": { "title": "Priority", "type": "string", "enum": ["critical", "high", "medium", "low"], "enumColors": { "critical": "red", "high": "orange", "medium": "yellow", "low": "green" } },
+      "plan_approved": { "title": "Plan Approved", "type": "boolean" },
+      "work_type": { "title": "Work Type", "type": "string", "enum": ["feature", "bug", "incident", "task"] },
+      "description": { "title": "Description", "type": "string", "format": "markdown" },
+      "ai_augmentation_level": { "title": "AI Augmentation Level", "type": "string", "enum": ["Human", "AI assisted", "AI led", "Autonomous"] },
+      "completed_at": { "title": "Completed At", "type": "string", "format": "date-time" },
+      "blast_radius_risk_score": { "title": "Blast Radius Risk Score", "type": "number" },
+      "blast_radius_analysis": { "title": "AI generated Blast Radius Analysis", "type": "string", "format": "markdown" },
+      "ai_prep_status": { "title": "AI Prep Status", "type": "string", "enum": ["Not started", "In review", "Awaiting approval", "Approved"] },
+      "ai_prep_confidence_score": { "title": "AI Prep Confidence Score", "type": "number" },
+      "ai_prep_notes": { "title": "AI Prep Notes", "type": "string", "format": "markdown" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "pr_status": { "title": "PR Status", "path": "pull_request.status" },
+    "pr_link": { "title": "PR Link", "path": "pull_request.link" },
+    "jira_status": { "title": "Jira Status", "path": "jira_ticket.status" },
+    "service_tier": { "title": "Service Tier", "path": "service.tier" }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "owner": { "title": "Owner", "target": "_user", "required": false, "many": false },
+    "target_environment": { "title": "Target Environment", "target": "environment", "required": false, "many": false },
+    "jira_ticket": { "title": "Jira Ticket", "target": "jiraIssue", "required": false, "many": false },
+    "service": { "title": "Service", "target": "service", "required": false, "many": false },
+    "pull_request": { "title": "Pull Request", "target": "githubPullRequest", "required": false, "many": false },
+    "team": { "title": "Team", "target": "_team", "required": false, "many": false }
+  }
+}

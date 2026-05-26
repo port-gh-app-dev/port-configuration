@@ -1,32 +1,14 @@
 {
   "identifier": "wizHostedTechnology",
-  "description": "This blueprint represents a wiz hosted technology",
   "title": "Wiz Hosted Technology",
   "icon": "Wiz",
   "schema": {
     "properties": {
-      "detectionMethods": {
-        "title": "Detection Methods",
-        "type": "array"
-      },
-      "installedPackages": {
-        "title": "Installed Packages",
-        "type": "array"
-      },
-      "firstSeen": {
-        "title": "First Seen",
-        "type": "string",
-        "format": "date-time"
-      },
-      "updatedAt": {
-        "title": "Updated At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "cpe": {
-        "title": "CPE",
-        "type": "string"
-      }
+      "detectionMethods": { "title": "Detection Methods", "type": "array" },
+      "installedPackages": { "title": "Installed Packages", "type": "array" },
+      "firstSeen": { "title": "First Seen", "type": "string", "format": "date-time" },
+      "updatedAt": { "title": "Updated At", "type": "string", "format": "date-time" },
+      "cpe": { "title": "CPE", "type": "string" }
     },
     "required": []
   },
@@ -34,12 +16,6 @@
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "technology": {
-      "title": "Technology",
-      "description": "The technology that this hosted technology is associated with",
-      "target": "wizTechnology",
-      "required": false,
-      "many": false
-    }
+    "technology": { "title": "Technology", "target": "wizTechnology", "required": false, "many": false }
   }
 }

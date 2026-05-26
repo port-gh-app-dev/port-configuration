@@ -1,0 +1,16 @@
+{
+  "identifier": "jiraProject",
+  "title": "Jira Project",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": { "title": "Project URL", "type": "string", "format": "url" },
+      "success_criteria_definition": { "title": "Success Criteria Definition", "type": "string", "format": "markdown" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

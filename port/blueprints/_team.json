@@ -1,0 +1,28 @@
+{
+  "identifier": "_team",
+  "title": "Team",
+  "icon": "Team",
+  "description": "This blueprint is synced with Port teams",
+  "schema": {
+    "properties": {
+      "description": { "type": "string", "title": "Description" },
+      "type": { "description": "Hierarchy level — team (leaf) or group (intermediate)", "enum": ["team", "group"], "enumColors": { "group": "turquoise", "team": "blue" }, "default": "team", "title": "Type", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "parent_team_name": { "title": "Parent Team", "path": "parent_team.$title" }
+  },
+  "calculationProperties": {
+    "deploy_freq_tier": { "title": "Deployment Frequency", "calculation": "if (.properties.total_deployments == null or .properties.total_deployments == 0) then \"Low\" else (if (.properties.services_count != null and .properties.services_count != 0) then ((.properties.deployment_frequency // 0) / .properties.services_count) else 0 end) as $dpf | if $dpf >= 7 then \"Elite\" elif $dpf >= 1 then \"High\" elif $dpf >= 0.25 then \"Medium\" else \"Low\" end end", "type": "string" },
+    "github_lead_time_tier": { "title": "Lead Time for Changes", "calculation": "if (.properties.github_lead_time_for_change == null) then \"Low\" elif .properties.github_lead_time_for_change <= 24 then \"Elite\" elif .properties.github_lead_time_for_change <= 168 then \"High\" elif .properties.github_lead_time_for_change <= 720 then \"Medium\" else \"Low\" end", "type": "string" }
+  },
+  "aggregationProperties": {
+    "size": { "title": "Size", "type": "number", "target": "_user", "calculationSpec": { "func": "count", "calculationBy": "entities" } },
+    "github_open_prs": { "title": "Open PRs", "type": "number", "target": "githubPullRequest", "query": { "combinator": "and", "rules": [{ "operator": "=", "property": "status", "value": "open" }] }, "calculationSpec": { "calculationBy": "entities", "func": "count" } }
+  },
+  "relations": {
+    "organization": { "title": "Organization", "target": "organization", "required": false, "many": false },
+    "parent_team": { "title": "Parent Team", "target": "_team", "required": false, "many": false }
+  }
+}

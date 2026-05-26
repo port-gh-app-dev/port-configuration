@@ -1,0 +1,31 @@
+{
+  "identifier": "trigger_ci_failure_cursor_fixer",
+  "title": "Trigger CI Failure Cursor Fixer on Failed Workflow Run",
+  "icon": "Github",
+  "description": "Automatically triggers the CI Failure Cursor Fixer AI agent when a GitHub workflow run conclusion changes to failure.",
+  "trigger": {
+    "type": "automation",
+    "event": { "type": "ANY_ENTITY_CHANGE", "blueprintIdentifier": "githubWorkflowRun" },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.conclusion == \"failure\"",
+        ".diff.before.properties.conclusion != \"failure\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.port.io/v1/agent/ci_failure_cursor_fixer/invoke",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": { "RUN_ID": "{{ .run.id }}", "Content-Type": "application/json" },
+    "body": {
+      "prompt": "A GitHub workflow run has just failed. Analyze and fix the CI failure.\n\nWorkflow Run Details:\n- Entity Identifier: {{ .event.context.entityIdentifier }}\n- Workflow Run Name: {{ .event.diff.after.title }}",
+      "labels": { "source": "CI Failure Automation", "entityIdentifier": "{{ .event.context.entityIdentifier }}" }
+    }
+  },
+  "publish": true
+}

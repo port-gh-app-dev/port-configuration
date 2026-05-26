@@ -1,0 +1,44 @@
+{
+  "identifier": "request_mcp_server",
+  "title": "Request New MCP Server",
+  "icon": "Microservice",
+  "description": "Request approval for a new MCP server to be added to the organization's approved registry",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "blueprintIdentifier": "mcpRegistry",
+    "userInputs": {
+      "properties": {
+        "server_name": { "title": "Server Name", "type": "string" },
+        "type": { "title": "Server Type", "type": "string", "enum": ["internal", "external"] },
+        "repository_url": { "title": "Repository URL", "type": "string", "format": "url" },
+        "description": { "title": "Description", "type": "string", "format": "markdown" },
+        "labels": { "title": "Labels", "type": "array", "items": { "type": "string" } },
+        "command": { "title": "Server Command", "type": "string" },
+        "endpoint": { "title": "Endpoint", "type": "string", "format": "url" },
+        "business_justification": { "title": "Business Justification", "type": "string", "format": "markdown" }
+      },
+      "required": ["server_name", "type", "repository_url", "description", "labels"]
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "mcpRegistry",
+    "mapping": {
+      "identifier": "{{ .inputs.server_name | gsub(\" \"; \"-\") | ascii_downcase }}",
+      "title": "{{ .inputs.server_name }}",
+      "properties": {
+        "type": "{{ .inputs.type }}",
+        "status": "pending",
+        "description": "{{ .inputs.description }}",
+        "labels": "{{ .inputs.labels }}",
+        "repository_url": "{{ .inputs.repository_url }}",
+        "command": "{{ .inputs.command }}",
+        "endpoint": "{{ .inputs.endpoint }}"
+      },
+      "relations": { "requestedBy": "{{ .trigger.by.user.email }}" }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}

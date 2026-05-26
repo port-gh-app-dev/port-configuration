@@ -1,0 +1,39 @@
+{
+  "identifier": "set_pull_request_user_relations",
+  "title": "Set Pull Requests User Relations",
+  "description": "Set relations between Pull Requests and Users based on the Git User",
+  "trigger": {
+    "type": "automation",
+    "event": { "type": "ANY_ENTITY_CHANGE", "blueprintIdentifier": "_user" },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.relations.git_hub_user != .diff.after.relations.git_hub_user",
+        ".diff.after.relations.git_hub_user != null"
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/migrations",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": { "Content-Type": "application/json", "RUN_ID": "{{ .run.id }}" },
+    "body": {
+      "mapping": {
+        "blueprint": "githubPullRequest",
+        "entity": {
+          "identifier": ".identifier",
+          "relations": {
+            "creator": "if \"{{ .event.diff.after.relations.git_hub_user }}\" == .relations.git_hub_creator then \"{{ .event.context.entityIdentifier }}\" else .relations.creator end"
+          }
+        },
+        "filter": "\"{{ .event.diff.after.relations.git_hub_user }}\" as $item | (.relations.git_hub_assignees | any(. == $item)) or ($item == .relations.git_hub_creator) or (.relations.git_hub_reviewers | any(. == $item))"
+      },
+      "sourceBlueprint": "githubPullRequest"
+    }
+  },
+  "publish": true
+}

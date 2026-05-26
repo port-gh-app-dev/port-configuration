@@ -1,0 +1,34 @@
+{
+  "identifier": "invoke_cursor_agent",
+  "title": "Invoke Cursor Agent",
+  "icon": "Cursor",
+  "description": "Trigger a Cursor Agent to perform a coding task",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "prompt": { "type": "string", "title": "Prompt" },
+        "repository": { "type": "string", "title": "Repository URL" }
+      },
+      "required": ["prompt", "repository"]
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api2.cursor.sh/automations/webhook/54529b37-ee10-4f32-a8e8-0322ec03435d",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer {{ .secrets[\"CURSOR_API_KEY\"] }}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "prompt": "{{ .inputs.prompt }}",
+      "repository": "{{ .inputs.repository }}"
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}
