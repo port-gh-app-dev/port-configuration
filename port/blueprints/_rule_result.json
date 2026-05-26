@@ -1,0 +1,29 @@
+{
+  "identifier": "_rule_result",
+  "title": "Scorecard Rule Result",
+  "icon": "Siren",
+  "description": "This blueprint represents the result of a specific rule test on an entity",
+  "ownership": { "type": "Direct" },
+  "schema": {
+    "properties": {
+      "result": { "title": "Result", "type": "string", "enum": ["Not passed", "Passed"], "enumColors": { "Not passed": "red", "Passed": "green" } },
+      "entity": { "type": "string", "title": "Entity" },
+      "result_last_change": { "type": "string", "title": "Result last change", "format": "date-time" }
+    },
+    "required": ["result", "entity"]
+  },
+  "mirrorProperties": {
+    "level": { "path": "rule.level" },
+    "scorecard": { "path": "rule.scorecard.$title" },
+    "blueprint": { "path": "rule.scorecard.blueprint" }
+  },
+  "calculationProperties": {
+    "entity_link": { "title": "Entity link", "calculation": "\"/\" + .properties.blueprint + \"Entity?identifier=\" + .properties.entity", "type": "string", "format": "url" }
+  },
+  "aggregationProperties": {},
+  "relations": {
+    "__team": { "title": "Team", "target": "_team", "required": false, "many": false },
+    "rule": { "title": "Rule", "target": "_rule", "required": true, "many": false },
+    "_organization": { "title": "Organization", "target": "organization", "required": false, "many": false }
+  }
+}

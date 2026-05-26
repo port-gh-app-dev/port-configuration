@@ -1,0 +1,33 @@
+{
+  "identifier": "_ai_invocations",
+  "title": "AI Invocation",
+  "icon": "Star",
+  "description": "For each agent request a match feedback entity will be created",
+  "ownership": { "type": "Inherited", "title": "Owning Teams", "path": "agent" },
+  "schema": {
+    "properties": {
+      "status": { "title": "Status", "type": "string", "enum": ["In Progress", "Completed", "Failed"] },
+      "asked_at": { "type": "string", "title": "Asked At", "format": "date-time" },
+      "replied_at": { "type": "string", "title": "Replied At", "format": "date-time" },
+      "prompt": { "type": "string", "title": "Prompt", "format": "markdown" },
+      "error": { "type": "string", "title": "Error" },
+      "response": { "type": "string", "title": "Response", "format": "markdown" },
+      "execution_logs": { "type": "string", "title": "Execution Logs", "format": "markdown" },
+      "labels": { "type": "object", "title": "Labels" },
+      "quota": { "type": "object", "title": "Quota" },
+      "provider": { "type": "string", "title": "Provider" },
+      "model": { "type": "string", "title": "Model" },
+      "source": { "type": "string", "title": "Source" },
+      "feedback_rating": { "type": "string", "title": "Feedback rating", "enum": ["positive", "negative"] },
+      "feedback_comment": { "type": "string", "title": "Feedback comment" }
+    },
+    "required": ["asked_at", "status"]
+  },
+  "mirrorProperties": { "agent_title": { "title": "agent title", "path": "agent.$title" } },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "agent": { "title": "Agent", "target": "_ai_agent", "required": false, "many": false },
+    "asked_by": { "title": "Asked By", "target": "_user", "required": false, "many": false }
+  }
+}

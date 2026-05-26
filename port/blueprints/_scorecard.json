@@ -1,0 +1,23 @@
+{
+  "identifier": "_scorecard",
+  "title": "Scorecard",
+  "icon": "Score",
+  "description": "This blueprint represents scorecards",
+  "schema": {
+    "properties": {
+      "blueprint": { "type": "string", "title": "Blueprint", "format": "blueprints" },
+      "levels": { "type": "array", "title": "Levels", "items": { "type": "object" } },
+      "filter": { "type": "object", "title": "Filter" }
+    },
+    "required": ["blueprint", "levels"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "of_rules_passed": { "title": "% of rules passed", "calculation": "(.properties.rules_passed/.properties.rules_tested)*10000|round/100", "type": "number" }
+  },
+  "aggregationProperties": {
+    "rules_tested": { "title": "Rules tested", "type": "number", "target": "_rule_result", "calculationSpec": { "func": "count", "calculationBy": "entities" } },
+    "rules_passed": { "title": "Rules passed", "type": "number", "target": "_rule_result", "query": { "combinator": "and", "rules": [{ "property": "result", "operator": "=", "value": "Passed" }] }, "calculationSpec": { "func": "count", "calculationBy": "entities" } }
+  },
+  "relations": {}
+}

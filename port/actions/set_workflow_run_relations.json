@@ -1,0 +1,38 @@
+{
+  "identifier": "set_workflow_run_relations",
+  "title": "Set GitHub Workflow Run relations",
+  "icon": "Github",
+  "description": "Set relations between GitHub Workflow Runs and services based on the Repository",
+  "trigger": {
+    "type": "automation",
+    "event": { "type": "ANY_ENTITY_CHANGE", "blueprintIdentifier": "" },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.relations.github_repository != .diff.after.relations.github_repository",
+        ".diff.after.relations.github_repository != null"
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/migrations",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": { "RUN_ID": "{{ .run.id }}", "Content-Type": "application/json" },
+    "body": {
+      "sourceBlueprint": "githubWorkflowRun",
+      "mapping": {
+        "blueprint": "githubWorkflowRun",
+        "filter": ".relations.repository == \"{{ .event.diff.after.relations.github_repository }}\"",
+        "entity": {
+          "identifier": ".identifier",
+          "relations": { "service": "\"{{ .event.context.entityIdentifier }}\"" }
+        }
+      }
+    }
+  },
+  "publish": false
+}

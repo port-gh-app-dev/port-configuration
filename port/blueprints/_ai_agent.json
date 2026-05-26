@@ -1,0 +1,26 @@
+{
+  "identifier": "_ai_agent",
+  "title": "AI Agent",
+  "icon": "Details",
+  "ownership": { "type": "Direct", "title": "Owning Teams" },
+  "schema": {
+    "properties": {
+      "description": { "type": "string", "title": "Description" },
+      "status": { "title": "Status", "type": "string", "enum": ["active", "inactive"], "enumColors": { "active": "green", "inactive": "red" }, "default": "active" },
+      "tools": { "items": { "type": "string" }, "type": "array", "title": "Tools", "default": ["^(list|get|search|track|describe)_.*"] },
+      "prompt": { "type": "string", "maxLength": 5000, "title": "Prompt", "format": "markdown" },
+      "execution_mode": { "title": "Execution Mode", "type": "string", "enum": ["Automatic", "Approval Required"], "default": "Approval Required" },
+      "conversation_starters": { "items": { "type": "string" }, "type": "array", "title": "Conversation Starters" },
+      "provider": { "type": "string", "title": "Provider" },
+      "model": { "type": "string", "title": "Model" },
+      "labels": { "type": "object", "title": "Labels" }
+    },
+    "required": ["tools", "status", "prompt"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {
+    "total_invocations": { "title": "Total Invocations", "type": "number", "target": "_ai_invocations", "calculationSpec": { "func": "count", "calculationBy": "entities" } }
+  },
+  "relations": {}
+}

@@ -1,0 +1,33 @@
+{
+  "identifier": "claude_code_analytics",
+  "title": "Claude Code Analytics",
+  "icon": "Claude",
+  "description": "Daily Claude Code usage metrics including sessions, lines of code, commits, and PRs",
+  "schema": {
+    "properties": {
+      "record_date": { "type": "string", "format": "date-time", "title": "Record Date (UTC)" },
+      "organization_id": { "type": "string", "title": "Organization ID" },
+      "actor_type": { "type": "string", "title": "Actor Type" },
+      "actor_name": { "type": "string", "title": "Actor Name" },
+      "terminal_type": { "type": "string", "title": "Terminal Type" },
+      "num_sessions": { "type": "number", "title": "Sessions" },
+      "lines_added": { "type": "number", "title": "Lines Added" },
+      "lines_removed": { "type": "number", "title": "Lines Removed" },
+      "commits": { "type": "number", "title": "Commits by Claude Code" },
+      "pull_requests": { "type": "number", "title": "Pull Requests by Claude Code" },
+      "edit_tool_accepted": { "type": "number", "title": "Edit Tool Accepted" },
+      "edit_tool_rejected": { "type": "number", "title": "Edit Tool Rejected" },
+      "write_tool_accepted": { "type": "number", "title": "Write Tool Accepted" },
+      "write_tool_rejected": { "type": "number", "title": "Write Tool Rejected" },
+      "model_breakdown": { "type": "array", "title": "Model Breakdown" }
+    },
+    "required": ["record_date", "organization_id"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "total_lines_changed": { "title": "Total Lines Changed", "calculation": ".properties.lines_added + .properties.lines_removed", "type": "number" },
+    "edit_acceptance_rate": { "title": "Edit Acceptance Rate", "calculation": "if (.properties.edit_tool_accepted + .properties.edit_tool_rejected) > 0 then (.properties.edit_tool_accepted / (.properties.edit_tool_accepted + .properties.edit_tool_rejected)) * 100 else 0 end", "type": "number" }
+  },
+  "aggregationProperties": {},
+  "relations": {}
+}

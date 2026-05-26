@@ -1,0 +1,28 @@
+{
+  "identifier": "set_parent_team_relations",
+  "title": "Set Parent Team relations",
+  "icon": "Team",
+  "description": "Set relations between Teams and the default group when a Team without a parent team is updated",
+  "trigger": {
+    "type": "automation",
+    "event": { "type": "ANY_ENTITY_CHANGE", "blueprintIdentifier": "_team" },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after != null",
+        ".diff.after.properties.type != \"group\"",
+        "(.diff.after.relations.parent_team == null) or (.diff.after.relations.parent_team == \"\")"
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "_team",
+    "mapping": {
+      "identifier": "{{ .event.diff.after.identifier }}",
+      "relations": { "parent_team": "default-group" }
+    }
+  },
+  "publish": true
+}

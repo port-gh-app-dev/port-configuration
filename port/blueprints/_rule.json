@@ -1,0 +1,25 @@
+{
+  "identifier": "_rule",
+  "title": "Scorecard Rule",
+  "icon": "Star",
+  "description": "This blueprint represents a specific scorecard rule",
+  "schema": {
+    "properties": {
+      "level": { "type": "string", "title": "Level", "enum": ["Basic", "Bronze", "Silver", "Gold"] },
+      "rule_description": { "type": "string", "title": "Rule description" },
+      "query": { "title": "Query", "type": "object" }
+    },
+    "required": ["level", "query"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "of_entities_passed": { "title": "% of entities passed", "calculation": "(.properties.entities_passed/.properties.entities_tested)*100", "type": "number" }
+  },
+  "aggregationProperties": {
+    "entities_tested": { "title": "Entities tested", "type": "number", "target": "_rule_result", "calculationSpec": { "func": "count", "calculationBy": "entities" } },
+    "entities_passed": { "title": "Entities passed", "type": "number", "target": "_rule_result", "query": { "combinator": "and", "rules": [{ "property": "result", "operator": "=", "value": "Passed" }] }, "calculationSpec": { "func": "count", "calculationBy": "entities" } }
+  },
+  "relations": {
+    "scorecard": { "title": "Scorecard", "target": "_scorecard", "required": true, "many": false }
+  }
+}

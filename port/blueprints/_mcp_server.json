@@ -1,0 +1,22 @@
+{
+  "identifier": "_mcp_server",
+  "title": "MCP Server",
+  "icon": "Details",
+  "description": "External MCP (Model Context Protocol) servers that can be connected to Port",
+  "ownership": { "type": "Direct", "title": "Owning Teams" },
+  "schema": {
+    "properties": {
+      "url": { "icon": "Link", "type": "string", "title": "URL", "description": "The URL of the MCP server", "format": "url" },
+      "description": { "icon": "DefaultProperty", "type": "string", "title": "Description", "description": "Description of the MCP server" },
+      "allowed_tools": { "icon": "DefaultProperty", "type": "array", "title": "Allowed Tools", "description": "Array of regex patterns for tool names that are allowed from this MCP server", "items": { "type": "string" }, "default": [] },
+      "oauth_config": { "icon": "Lock", "type": "object", "title": "OAuth Config", "description": "OAuth configuration for servers without DCR support" },
+      "headers": { "icon": "DefaultProperty", "type": "object", "title": "Headers", "description": "Custom headers to inject when connecting to the MCP server" },
+      "exposed": { "icon": "DefaultProperty", "title": "Expose As Port Connector", "type": "boolean", "description": "If true, this MCP server will be available as a connector in the Port UI", "default": false }
+    },
+    "required": ["url"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

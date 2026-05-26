@@ -1,0 +1,23 @@
+{
+  "identifier": "githubWorkflow",
+  "title": "GitHub Workflow",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "createdAt": { "format": "date-time", "title": "Created At", "type": "string" },
+      "last_triggered_at": { "format": "date-time", "title": "Last Triggered At", "type": "string" },
+      "link": { "format": "url", "title": "Link", "type": "string" },
+      "path": { "title": "Path", "type": "string" },
+      "result": { "enum": ["success", "failure", "cancelled", "skipped", "timed_out", "action_required", "neutral", "stale", "startup_failure"], "title": "Result", "type": "string" },
+      "status": { "enum": ["active", "deleted", "disabled_fork", "disabled_inactivity", "disabled_manually"], "title": "Status", "type": "string" },
+      "updatedAt": { "format": "date-time", "title": "Updated At", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "repository": { "title": "Repository", "target": "githubRepository", "required": false, "many": false }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "identifier": "githubRepository",
+  "title": "GitHub Repository",
+  "icon": "Github",
+  "ownership": { "type": "Direct" },
+  "schema": {
+    "properties": {
+      "readme": { "title": "README", "type": "string", "format": "markdown" },
+      "codeowners": { "title": "CODEOWNERS", "type": "string", "format": "markdown" },
+      "url": { "title": "Repository URL", "type": "string", "format": "url" },
+      "defaultBranch": { "title": "Default branch", "type": "string" },
+      "description": { "title": "Description", "type": "string" },
+      "visibility": { "title": "Visibility", "type": "string" },
+      "language": { "title": "Language", "type": "string" },
+      "last_push": { "title": "Last Repository Push", "type": "string", "format": "date-time" },
+      "gitignore": { "title": "Git Ignore", "type": "string" },
+      "pr_template": { "title": "PR Template", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "cycle_time_trend": { "title": "PR Cycle Time Trend", "calculation": "((.properties.pr_cycle_time // 0) - (.properties.pr_cycle_time_weekly // 0)) as $diff | if $diff > 0 then \"Improving\" elif $diff < 0 then \"Degrading\" else \"Stable\" end", "type": "string" },
+    "stale_pr_share_percent": { "title": "Stale PR Share (%)", "calculation": "if (.properties.open_prs != null and .properties.open_prs != 0) then (.properties.stale_prs_7d / .properties.open_prs) * 100 else 0 end", "type": "number" }
+  },
+  "aggregationProperties": {
+    "open_prs": { "title": "Open PRs", "type": "number", "target": "githubPullRequest", "query": { "combinator": "and", "rules": [{ "operator": "=", "property": "status", "value": "open" }] }, "calculationSpec": { "calculationBy": "entities", "func": "count" } },
+    "merged_prs_last_month": { "title": "Monthly PR Throughput", "type": "number", "target": "githubPullRequest", "query": { "combinator": "and", "rules": [{ "operator": "between", "property": "mergedAt", "value": { "preset": "lastMonth" } }] }, "calculationSpec": { "calculationBy": "entities", "func": "count" } }
+  },
+  "relations": {
+    "githubTeams": { "title": "GitHub Teams", "target": "githubTeam", "required": false, "many": true }
+  }
+}

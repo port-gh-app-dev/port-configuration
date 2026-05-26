@@ -1,0 +1,20 @@
+{
+  "identifier": "skill",
+  "title": "Skill",
+  "icon": "Learn",
+  "ownership": { "type": "Direct", "title": "Owner" },
+  "schema": {
+    "properties": {
+      "description": { "title": "Description", "type": "string" },
+      "instructions": { "title": "Instructions", "type": "string", "format": "markdown" },
+      "references": { "title": "References", "type": "array" },
+      "assets": { "title": "Assets", "type": "array" },
+      "content": { "title": "content", "type": "object" }
+    },
+    "required": ["description", "instructions"]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}

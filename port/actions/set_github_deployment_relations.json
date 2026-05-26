@@ -1,0 +1,37 @@
+{
+  "identifier": "set_github_deployment_relations",
+  "title": "Set GitHub Deployment relations",
+  "description": "Set relations between Deployments and services based on the Repository",
+  "trigger": {
+    "type": "automation",
+    "event": { "type": "ANY_ENTITY_CHANGE", "blueprintIdentifier": "" },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.relations.github_repository != .diff.after.relations.github_repository",
+        ".diff.after.relations.github_repository != null"
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/migrations",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": { "Content-Type": "application/json", "RUN_ID": "{{ .run.id }}" },
+    "body": {
+      "mapping": {
+        "blueprint": "deployment",
+        "entity": {
+          "identifier": ".identifier",
+          "relations": { "service": "\"{{ .event.context.entityIdentifier }}\"" }
+        },
+        "filter": ".relations.github_pull_request != null and .properties.github_repo_id == \"{{ .event.diff.after.relations.github_repository }}\""
+      },
+      "sourceBlueprint": "deployment"
+    }
+  },
+  "publish": false
+}

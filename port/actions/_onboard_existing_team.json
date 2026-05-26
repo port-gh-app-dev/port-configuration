@@ -1,0 +1,41 @@
+{
+  "identifier": "_onboard_existing_team",
+  "title": "Add team members",
+  "icon": "Team",
+  "description": "Add members to an existing team",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "blueprintIdentifier": "_team",
+    "userInputs": {
+      "properties": {
+        "team_members": {
+          "type": "array",
+          "title": "Team members",
+          "items": { "type": "string", "format": "entity", "blueprint": "_user" }
+        }
+      }
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/migrations",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {},
+    "body": {
+      "sourceBlueprint": "_user",
+      "mapping": {
+        "blueprint": "_user",
+        "filter": ".identifier as $item | {{ .inputs.team_members | map(.identifier) }}  | any(. == $item)",
+        "entity": {
+          "identifier": ".identifier",
+          "team": ".team + [\"{{ .entity.identifier }}\"] | unique"
+        }
+      }
+    }
+  },
+  "requiredApproval": false,
+  "publish": true
+}

@@ -1,0 +1,16 @@
+{
+  "identifier": "organization",
+  "title": "Organization",
+  "icon": "Organization",
+  "description": "A logical organization grouping teams and services",
+  "schema": { "properties": {}, "required": [] },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "github_cycle_time_trend": { "title": "PR Cycle Time Trend", "calculation": "((.properties.github_pr_cycle_time // 0) - (.properties.github_pr_cycle_time_weekly // 0)) as $diff | if $diff > 0 then \"Improving\" elif $diff < 0 then \"Degrading\" else \"Stable\" end", "type": "string" },
+    "github_stale_pr_share_percent": { "title": "Stale PR Share (%)", "calculation": "if (.properties.github_open_prs != null and .properties.github_open_prs != 0) then (.properties.github_stale_prs_7d / .properties.github_open_prs) * 100 else 0 end", "type": "number" }
+  },
+  "aggregationProperties": {
+    "github_open_prs": { "title": "Open PRs", "type": "number", "target": "githubPullRequest", "query": { "combinator": "and", "rules": [{ "operator": "=", "property": "status", "value": "open" }] }, "calculationSpec": { "calculationBy": "entities", "func": "count" } }
+  },
+  "relations": {}
+}

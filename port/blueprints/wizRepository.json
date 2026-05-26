@@ -1,39 +1,16 @@
 {
   "identifier": "wizRepository",
-  "description": "This blueprint represents a wiz repository",
   "title": "Wiz Repository",
   "icon": "Wiz",
   "schema": {
     "properties": {
-      "url": {
-        "title": "URL",
-        "type": "string",
-        "format": "url"
-      },
-      "platform": {
-        "title": "Platform",
-        "type": "string"
-      },
-      "public": {
-        "title": "Public",
-        "type": "boolean"
-      },
-      "archived": {
-        "title": "Archived",
-        "type": "boolean"
-      },
-      "visibility": {
-        "title": "Visibility",
-        "type": "string"
-      },
-      "organization": {
-        "title": "Organization",
-        "type": "string"
-      },
-      "branches": {
-        "title": "Branches",
-        "type": "array"
-      }
+      "url": { "title": "URL", "type": "string", "format": "url" },
+      "platform": { "title": "Platform", "type": "string" },
+      "public": { "title": "Public", "type": "boolean" },
+      "archived": { "title": "Archived", "type": "boolean" },
+      "visibility": { "title": "Visibility", "type": "string" },
+      "organization": { "title": "Organization", "type": "string" },
+      "branches": { "title": "Branches", "type": "array" }
     },
     "required": []
   },
@@ -41,11 +18,6 @@
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "projects": {
-      "title": "Projects",
-      "target": "wizProject",
-      "required": false,
-      "many": false
-    }
+    "projects": { "title": "Projects", "target": "wizProject", "required": false, "many": false }
   }
 }

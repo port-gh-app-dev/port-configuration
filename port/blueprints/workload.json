@@ -1,0 +1,17 @@
+{
+  "identifier": "workload",
+  "title": "Workload",
+  "icon": "Deployment",
+  "schema": {
+    "properties": {
+      "version": { "type": "string", "title": "Version" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "environment": { "title": "Environment", "target": "environment", "required": false, "many": false }
+  }
+}

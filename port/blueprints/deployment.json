@@ -1,0 +1,23 @@
+{
+  "identifier": "deployment",
+  "title": "Deployment",
+  "icon": "Deployment",
+  "description": "A production deployment created from a merged PR to the default branch",
+  "schema": {
+    "properties": {
+      "createdAt": { "format": "date-time", "title": "Deployment Time", "type": "string" },
+      "deploymentStatus": { "enum": ["Success", "Failure", "Pending"], "enumColors": { "Failure": "red", "Pending": "yellow", "Success": "green" }, "title": "Deployment Status", "type": "string" },
+      "environment": { "enum": ["Production", "Staging", "Development"], "enumColors": { "Development": "blue", "Production": "green", "Staging": "yellow" }, "title": "Environment", "type": "string" }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "github_lead_time_hours": { "title": "Lead Time for Changes (Hours)", "path": "github_pull_request.cycle_time_hours" },
+    "github_repo_id": { "title": "GitHub Repository ID", "path": "github_pull_request.repository.$identifier" }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "github_pull_request": { "title": "Pull Request", "target": "githubPullRequest", "required": false, "many": false }
+  }
+}
